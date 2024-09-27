@@ -1,10 +1,10 @@
 <?php
 class Database {
-    // Datos de conexión desde la URL obtenida
+    // Nuevos datos de conexión
     private $host = "us-cluster-east-01.k8s.cleardb.net";
-    private $db_name = "heroku_3a87f62d1791bda";
-    private $username = "b3633befa1a619";
-    private $password = "4e452c28";
+    private $db_name = "heroku_a0591520c83c92b";
+    private $username = "b7cf295cbfdbf0";
+    private $password = "3dcd9529";
     public $conn;
 
     public function getConnection() {
@@ -19,3 +19,4 @@ class Database {
     }
 }
 ?>
+
