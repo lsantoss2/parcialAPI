@@ -1,0 +1,5 @@
+{
+    "name": "vehiculosapi/app",
+    "description": "API para gestionar vehículos",
+    "require": {}
+}
