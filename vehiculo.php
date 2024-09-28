@@ -21,7 +21,6 @@ class vehiculo {
     public $carnet;
     public $activo;
 
-
     public function __construct($db) {
         $this->conn = $db;
     }
@@ -134,4 +133,5 @@ class vehiculo {
         return false;
     }
 }
+
 ?>
