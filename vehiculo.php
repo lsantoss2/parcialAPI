@@ -7,19 +7,20 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'db.php';
 
-class Vehiculo {
+class vehiculo {
     private $conn;
-    private $table_name = "Vehiculos";
+    private $table_name = "vehiculos";
 
-    public $idVehiculo;
-    public $idColor;
-    public $idMarca;
+    public $idvehiculo;
+    public $idcolor;
+    public $idmarca;
     public $modelo;
     public $chasis;
     public $motor;
     public $nombre;
     public $carnet;
     public $activo;
+
 
     public function __construct($db) {
         $this->conn = $db;
@@ -28,13 +29,13 @@ class Vehiculo {
     // Función para crear un nuevo vehículo
     public function crear() {
         $query = "INSERT INTO " . $this->table_name . " SET
-            idColor=:idColor, idMarca=:idMarca, modelo=:modelo, chasis=:chasis, motor=:motor, nombre=:nombre, carnet=:carnet, activo=:activo";
+            idcolor=:idcolor, idmarca=:idmarca, modelo=:modelo, chasis=:chasis, motor=:motor, nombre=:nombre, carnet=:carnet, activo=:activo";
         
         $stmt = $this->conn->prepare($query);
 
         // Sanitizar datos
-        $this->idColor = htmlspecialchars(strip_tags($this->idColor));
-        $this->idMarca = htmlspecialchars(strip_tags($this->idMarca));
+        $this->idcolor = htmlspecialchars(strip_tags($this->idcolor));
+        $this->idmarca = htmlspecialchars(strip_tags($this->idmarca));
         $this->modelo = htmlspecialchars(strip_tags($this->modelo));
         $this->chasis = htmlspecialchars(strip_tags($this->chasis));
         $this->motor = htmlspecialchars(strip_tags($this->motor));
@@ -43,8 +44,8 @@ class Vehiculo {
         $this->activo = htmlspecialchars(strip_tags($this->activo));
 
         // Enlazar los valores
-        $stmt->bindParam(":idColor", $this->idColor);
-        $stmt->bindParam(":idMarca", $this->idMarca);
+        $stmt->bindParam(":idcolor", $this->idcolor);
+        $stmt->bindParam(":idmarca", $this->idmarca);
         $stmt->bindParam(":modelo", $this->modelo);
         $stmt->bindParam(":chasis", $this->chasis);
         $stmt->bindParam(":motor", $this->motor);
@@ -69,9 +70,9 @@ class Vehiculo {
 
     // Función para buscar un vehículo por ID
     public function buscarPorId() {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE idVehiculo = :idVehiculo";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE idvehiculo = :idvehiculo";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idVehiculo', $this->idVehiculo);
+        $stmt->bindParam(':idvehiculo', $this->idvehiculo);
         $stmt->execute();
         return $stmt;
     }
@@ -79,33 +80,33 @@ class Vehiculo {
     // Función para actualizar un vehículo
     public function actualizar() {
         $query = "UPDATE " . $this->table_name . " 
-                  SET idColor = :idColor, idMarca = :idMarca, modelo = :modelo, chasis = :chasis, 
+                  SET idcolor = :idcolor, idmarca = :idmarca, modelo = :modelo, chasis = :chasis, 
                       motor = :motor, nombre = :nombre, carnet = :carnet, activo = :activo
-                  WHERE idVehiculo = :idVehiculo";
+                  WHERE idvehiculo = :idvehiculo";
     
         $stmt = $this->conn->prepare($query);
     
         // Sanitizar los datos
-        $this->idColor = htmlspecialchars(strip_tags($this->idColor));
-        $this->idMarca = htmlspecialchars(strip_tags($this->idMarca));
+        $this->idcolor = htmlspecialchars(strip_tags($this->idcolor));
+        $this->idmarca = htmlspecialchars(strip_tags($this->idmarca));
         $this->modelo = htmlspecialchars(strip_tags($this->modelo));
         $this->chasis = htmlspecialchars(strip_tags($this->chasis));
         $this->motor = htmlspecialchars(strip_tags($this->motor));
         $this->nombre = htmlspecialchars(strip_tags($this->nombre));
         $this->carnet = htmlspecialchars(strip_tags($this->carnet));
         $this->activo = htmlspecialchars(strip_tags($this->activo));
-        $this->idVehiculo = htmlspecialchars(strip_tags($this->idVehiculo));
+        $this->idvehiculo = htmlspecialchars(strip_tags($this->idvehiculo));
     
         // Enlazar los valores
-        $stmt->bindParam(":idColor", $this->idColor);
-        $stmt->bindParam(":idMarca", $this->idMarca);
+        $stmt->bindParam(":idcolor", $this->idcolor);
+        $stmt->bindParam(":idmarca", $this->idmarca);
         $stmt->bindParam(":modelo", $this->modelo);
         $stmt->bindParam(":chasis", $this->chasis);
         $stmt->bindParam(":motor", $this->motor);
         $stmt->bindParam(":nombre", $this->nombre);
         $stmt->bindParam(":carnet", $this->carnet);
         $stmt->bindParam(":activo", $this->activo);
-        $stmt->bindParam(":idVehiculo", $this->idVehiculo);
+        $stmt->bindParam(":idvehiculo", $this->idvehiculo);
     
         // Ejecutar la consulta
         if ($stmt->execute()) {
@@ -116,15 +117,15 @@ class Vehiculo {
 
     // Función para eliminar un vehículo
     public function eliminar() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE idVehiculo = :idVehiculo";
+        $query = "DELETE FROM " . $this->table_name . " WHERE idvehiculo = :idvehiculo";
     
         $stmt = $this->conn->prepare($query);
     
         // Sanitizar el dato
-        $this->idVehiculo = htmlspecialchars(strip_tags($this->idVehiculo));
+        $this->idvehiculo = htmlspecialchars(strip_tags($this->idvehiculo));
     
         // Enlazar el valor
-        $stmt->bindParam(":idVehiculo", $this->idVehiculo);
+        $stmt->bindParam(":idvehiculo", $this->idvehiculo);
     
         // Ejecutar la consulta
         if ($stmt->execute()) {

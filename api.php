@@ -5,7 +5,7 @@ include_once 'vehiculo.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$vehiculo = new Vehiculo($db);
+$vehiculo = new vehiculo($db);
 
 $request_method = $_SERVER["REQUEST_METHOD"];
 
@@ -13,7 +13,7 @@ switch ($request_method) {
     case 'GET':
         // Verifica si existe un ID en los parámetros de la URL
         if (isset($_GET['id'])) {
-            $vehiculo->idVehiculo = $_GET['id'];
+            $vehiculo->idvehiculo = $_GET['id'];
             $stmt = $vehiculo->buscarPorId(); // Usamos la función buscarPorId
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -36,8 +36,8 @@ switch ($request_method) {
     case 'POST':
         // Crear un nuevo vehículo
         $data = json_decode(file_get_contents("php://input"));
-        $vehiculo->idColor = $data->idColor;
-        $vehiculo->idMarca = $data->idMarca;
+        $vehiculo->idcolor = $data->idcolor;
+        $vehiculo->idmarca = $data->idmarca;
         $vehiculo->modelo = $data->modelo;
         $vehiculo->chasis = $data->chasis;
         $vehiculo->motor = $data->motor;
@@ -55,9 +55,9 @@ switch ($request_method) {
     case 'PUT':
         // Actualizar un vehículo existente
         $data = json_decode(file_get_contents("php://input"));
-        $vehiculo->idVehiculo = $data->idVehiculo;
-        $vehiculo->idColor = $data->idColor;
-        $vehiculo->idMarca = $data->idMarca;
+        $vehiculo->idvehiculo = $data->idvehiculo;
+        $vehiculo->idcolor = $data->idcolor;
+        $vehiculo->idmarca = $data->idmarca;
         $vehiculo->modelo = $data->modelo;
         $vehiculo->chasis = $data->chasis;
         $vehiculo->motor = $data->motor;
@@ -75,7 +75,7 @@ switch ($request_method) {
     case 'DELETE':
         // Eliminar un vehículo
         $data = json_decode(file_get_contents("php://input"));
-        $vehiculo->idVehiculo = $data->idVehiculo;
+        $vehiculo->idvehiculo = $data->idvehiculo;
 
         if ($vehiculo->eliminar()) {
             echo json_encode(array("message" => "Vehículo eliminado."));
