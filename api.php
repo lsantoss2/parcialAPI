@@ -33,25 +33,39 @@ switch ($request_method) {
         }
         break;
 
-    case 'POST':
-        // Crear un nuevo vehículo
-        $data = json_decode(file_get_contents("php://input"));
-        $vehiculo->idcolor = $data->idcolor;
-        $vehiculo->idmarca = $data->idmarca;
-        $vehiculo->modelo = $data->modelo;
-        $vehiculo->chasis = $data->chasis;
-        $vehiculo->motor = $data->motor;
-        $vehiculo->nombre = $data->nombre;
-        $vehiculo->carnet = $data->carnet;
-        $vehiculo->activo = $data->activo;
-
-        if ($vehiculo->crear()) {
-            echo json_encode(array("message" => "Vehículo creado."));
-        } else {
-            echo json_encode(array("message" => "Error al crear vehículo."));
-        }
-        break;
-
+        case 'POST':
+            // Obtener datos JSON
+            $data = json_decode(file_get_contents("php://input"));
+            
+            // Agregar mensajes de depuración
+            if ($data === null) {
+                echo json_encode(array("message" => "No se recibieron datos o el formato es incorrecto."));
+                exit;
+            }
+        
+            // Mapear datos
+            $vehiculo->idColor = $data->idcolor ?? null;
+            $vehiculo->idMarca = $data->idmarca ?? null;
+            $vehiculo->modelo = $data->modelo ?? null;
+            $vehiculo->chasis = $data->chasis ?? null;
+            $vehiculo->motor = $data->motor ?? null;
+            $vehiculo->nombre = $data->nombre ?? null;
+            $vehiculo->activo = $data->activo ?? null;
+        
+            // Verificar si los datos fueron mapeados correctamente
+            if (!$vehiculo->idColor || !$vehiculo->idMarca || !$vehiculo->modelo || !$vehiculo->chasis || !$vehiculo->motor || !$vehiculo->nombre || !$vehiculo->activo) {
+                echo json_encode(array("message" => "Datos incompletos."));
+                exit;
+            }
+        
+            // Intentar crear el vehículo
+            if ($vehiculo->crear()) {
+                echo json_encode(array("message" => "Vehículo creado."));
+            } else {
+                echo json_encode(array("message" => "Error al crear vehículo."));
+            }
+            break;
+        
     case 'PUT':
         // Actualizar un vehículo existente
         $data = json_decode(file_get_contents("php://input"));
